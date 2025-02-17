@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phân Loại Nhạc</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #181818;
+            padding: 20px;
+            height: 100vh;
+            overflow-y: auto;
+            flex-shrink: 0;
+        }
+        .sidebar h3 {
+            margin-bottom: 15px;
+        }
+        .playlist-item {
+            padding: 10px;
+            background-color: #242424;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+        }
+        .playlist-item:hover {
+            background-color: #333;
+        }
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: black;
+            padding: 10px 20px;
+            width: 100%;
+        }
+        .header .logo {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .header .search-bar {
+            flex-grow: 1;
+            margin: 0 20px;
+        }
+        .header input {
+            width: 100%;
+            padding: 8px;
+            border-radius: 20px;
+            border: none;
+            background-color: #333;
+            color: white;
+        }
+        .header .profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .container {
+            flex-grow: 1;
+            padding: 20px;
+        }
+        h2 {
+            text-align: left;
+        }
+        .category {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 10px 0;
+        }
+        .category-item {
+            background-color: #242424;
+            padding: 20px;
+            border-radius: 10px;
+            min-width: 150px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .category-item:hover {
+            background-color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h3>Thư viện</h3>
+        <div class="playlist-item">💜 Bài hát đã thích</div>
+        <div class="playlist-item">Our Beloved</div>
+        <div class="playlist-item">SUNI</div>
+        <div class="playlist-item">Family</div>
+        <div class="playlist-item">Chill bùn</div>
+        <div class="playlist-item">Nhẹ nhàng</div>
+    </div>
+    
+    <div class="main-content">
+        <div class="header">
+            <div class="logo">🎵 CD04</div>
+            <div class="search-bar">
+                <input type="text" placeholder="Bạn muốn phát nội dung gì?">
+            </div>
+            <div class="profile">
+                <button>Khám phá Premium</button>
+                <span>⚙ Cài đặt Ứng dụng</span>
+                <span>🔔</span>
+                <img src="profile.jpg" alt="Avatar" width="30" height="30" style="border-radius: 50%;">
+            </div>
+        </div>
+        <div class="container">
+            <h2>Thể loại nhạc</h2>
+            <div class="category">
+                <div class="category-item">#V-Pop</div>
+                <div class="category-item">#Rock Việt</div>
+                <div class="category-item">#Tình ca</div>
+                <div class="category-item">#Rap</div>
+                <div class="category-item">#New Wave</div>
+                <div class="category-item">#Pop goes Classical</div>
+                <div class="category-item">#Bossa Nova</div>
+                <div class="category-item">#Rock</div>
+                <div class="category-item">#Energetic</div>
+            </div>
+
+            <h2>Theo nghệ sĩ</h2>
+            <div class="category">
+                <div class="category-item">Sơn Tùng M-TP</div>
+                <div class="category-item">Hồ Ngọc Hà</div>
+                <div class="category-item">Binz</div>
+                <div class="category-item">Taylor Swift</div>
+                <div class="category-item">The Weeknd</div>
+            </div>
+
+            <h2>Theo album</h2>
+            <div class="category">
+                <div class="category-item">Sky Tour</div>
+                <div class="category-item">Love Songs</div>
+                <div class="category-item">Rap Viet</div>
+                <div class="category-item">1989</div>
+                <div class="category-item">After Hours</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
