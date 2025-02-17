@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup - Spotify Clone</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            width: 400px;
+            background-color: #121212;
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
+        }
+        .title {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            text-transform: capitalize;
+        }
+        .title span {
+            display: block;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #333;
+            background: #222;
+            color: white;
+            transition: border 0.3s;
+        }
+        input:focus {
+            border-color: #1db954;
+            outline: none;
+        }
+        .error {
+            color: #ff4d4d;
+            font-size: 14px;
+            display: none;
+            margin-top: 5px;
+        }
+        .button {
+            width: 100%;
+            padding: 15px;
+            background-color: #1db954;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .button:hover {
+            background-color: #1ed760;
+            transform: scale(1.05);
+        }
+        .social-button {
+            background-color: #333;
+            border: none;
+            color: white;
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .social-button:hover {
+            background-color: #444;
+            transform: scale(1.05);
+        }
+        .social-button i {
+            font-size: 20px;
+            position: absolute;
+            left: 15px;
+        }
+        .social-button span {
+            flex: 1;
+            text-align: center;
+        }
+        a {
+            color: #1db954;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        a:hover {
+            color: #1ed760;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #bbb;
+            text-align: center;
+        }
+        .footer p {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .footer a {
+            margin-left: 5px;
+            text-decoration: underline;
+        }
+        .footer .policy {
+            margin-top: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="title"><span>Sign up to</span> <span>start listening</span></h2>
+        <label>Email address</label>
+        <input type="text" id="email" placeholder="name@domain.com">
+        <p class="error" id="error-message">❗ This email is invalid. Make sure it's written correctly.</p>
+        <a href="#">Use phone number instead.</a>
+        <button class="button" onclick="validateEmail()">Next</button>
+        <hr>
+        <button class="social-button"><i class="fab fa-google"></i><span>Sign up with Google</span></button>
+        <button class="social-button"><i class="fab fa-facebook"></i><span>Sign up with Facebook</span></button>
+        <button class="social-button"><i class="fab fa-apple"></i><span>Sign up with Apple</span></button>
+        <div class="footer">
+            <p>Already have an account?<a href="#"> Log in here.</a></p>
+            <p class="policy">This site is protected by reCAPTCHA and the Google <a href="#">Privacy Policy</a> and <a href="#">Terms of Service</a> apply.</p>
+        </div>
+    </div>
+
+    <script>
+        function validateEmail() {
+            const email = document.getElementById("email").value;
+            const errorMessage = document.getElementById("error-message");
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (!emailRegex.test(email)) {
+                errorMessage.style.display = "block";
+            } else {
+                errorMessage.style.display = "none";
+                alert("Email is valid! Proceeding...");
+            }
+        }
+    </script>
+</body>
+</html>
