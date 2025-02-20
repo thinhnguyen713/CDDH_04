@@ -1,51 +1,60 @@
 <?php
-// Kết nối cơ sở dữ liệu
+// Kết nối đến MySQL
 $servername = "localhost";
 $username = "root";
-$password = ""; 
-$dbname = "spotify"; 
+$password = "";
+$dbname = "spotify";
 
-// kết nối sqlsql
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Kiểm tra kết nối
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    die("Kết nối thất bại: " . $conn->connect_error);
 }
 
 // Xử lý đăng nhập
 $message = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $conn->real_escape_string($_POST['username']);
-    $password = $conn->real_escape_string($_POST['password']);
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
-    // Truy vấn kiểm tra thông tin đăng nhập
-    $sql = "SELECT * FROM users WHERE username='$username' AND password='$password'";
+    // Truy vấn kiểm tra tài khoản
+    $sql = "SELECT * FROM users WHERE username = '$username' OR email = '$username'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        // Đăng nhập thành công
-        $message = "Đăng Nhập Thành CôngCông!";
-        // Chuyển hướng đến trang chính hoặc thực hiện các hành động khác
+        $row = $result->fetch_assoc();
+        
+        // Kiểm tra mật khẩu
+        if ($password == $row['password']) { 
+            echo "Đăng nhập thành công!";
+            header("Location: home.php"); 
+            exit();
+        } else {
+            $message = "Mật khẩu không đúng!";
+        }
     } else {
-        // Đăng nhập thất bại
-        $message = "Kiểm tra lại thông tin đăng nhập!";
+        $message = "Tài khoản không tồn tại!";
     }
 }
 
 $conn->close();
 ?>
 
+
+
+
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spotify Login</title>
+    <title>Đăng Nhập</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #121212;
+            background: linear-gradient(to bottom, #444, #000);
             color: #fff;
             display: flex;
             justify-content: center;
@@ -53,93 +62,150 @@ $conn->close();
             height: 100vh;
             margin: 0;
         }
-
         .login-container {
-            background-color: #181818;
-            padding: 40px;
+            background-color: #121212;
+            padding: 70px;
             border-radius: 10px;
-            width: 300px;
+            width: 400px;
             text-align: center;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
         }
-
-        .logo img {
+        .logo {
             width: 100px;
             margin-bottom: 20px;
         }
-
-        .form-group {
-            margin-bottom: 15px;
-            text-align: left;
+        .social-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 50px;
+            align-items: center;
         }
-
+        .social-button {
+            background: #121212;
+            color: #fff;
+            padding: 14px 0;
+            border: 1px solid #353434;
+            border-radius: 30px;
+            font-size: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 80%;
+            font-weight: bold;
+            transition: border-color 0.2s ease-in-out;
+        }
+        .social-button img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+        .form-group {
+            text-align: left;
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
         .form-group label {
             display: block;
             margin-bottom: 5px;
+            font-size: 14px;
+            width: 80%;
         }
-
         .form-group input {
-            width: 100%;
-            padding: 10px;
-            border: none;
+            width: 80%;
+            padding: 12px;
+            border: 1px solid #555;
             border-radius: 5px;
-            background-color: #333;
-            color: #fff;
+            background-color: #121212;
+            color: #ffffff;
+            font-size: 14px;
+            text-align: left;
         }
-
-        button {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            background-color: #1DB954;
-            color: #fff;
-            font-size: 16px;
+        .separator {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .separator::before, .separator::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid #555;
+        }
+        .separator:not(:empty)::before {
+            margin-right: .25em;
+        }
+        .separator:not(:empty)::after {
+            margin-left: .25em;
+        }
+        .btn-login {
+            background: #1DB954;
+            color: #000000;
+            padding: 14px 0;
+            border: 1px solid #ece9e9;
+            border-radius: 30px;
+            font-size: 15px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 80%;
+            font-weight: bold;
+            margin: auto;
+            transition: border-color 0.2s ease-in-out, transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
         }
-
-        button:hover {
-            background-color: #1ed760;
-        }
-
         .signup-link {
             margin-top: 20px;
         }
-
         .signup-link a {
             color: #1DB954;
             text-decoration: none;
         }
 
-        .signup-link a:hover {
-            text-decoration: underline;
+        
+        .social-button:hover, .btn-login:hover {
+            border-color: #fff;
         }
 
-        .message {
-            color: #ff0000;
-            margin-top: 10px;
+        .btn-login:hover {
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
         }
     </style>
 </head>
 <body>
     <div class="login-container">
-        <div class="logo">
-            <img src="" alt="Spotify Logo">
+        <img src="logo-new.png" alt="Spotify Logo" class="logo">
+        <h1>Đăng nhập vào Spotify</h1>
+
+
+        <!-- Hiển thị thông báo lỗi -->
+        <?php if (!empty($message)) { echo "<p style='color: red;'>$message</p>"; } ?>
+
+        
+        <div class="social-buttons">
+            <button class="social-button"><img src="logogg.jpg" alt="Google Logo">Tiếp tục bằng Google</button>
+            <button class="social-button"><img src="logofb.jpg" alt="Facebook Logo">Tiếp tục bằng Facebook</button>
+            <button class="social-button">Tiếp tục bằng số điện thoại</button>
         </div>
-        <form action="images\logo-new.png" method="POST">
+        <div class="separator"></div>
+        <form action="login.php" method="POST">
             <div class="form-group">
-                <label for="username">Username or Email</label>
-                <input type="text" id="username" name="username" required>
+                <label>Email hoặc tên người dùng</label>
+                <input type="text" name="username" placeholder="Email hoặc tên người dùng" required>
             </div>
             <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
+                <label>Mật khẩu</label>
+                <input type="password" name="password" placeholder="Nhập mật khẩu" required>
             </div>
-            <button type="submit">Log In</button>
+            <button class="btn-login" type="submit">Tiếp tục</button>
         </form>
         <div class="signup-link">
-            <p>Don't have an account? <a href="#">Sign up for Spotify</a></p>
+            <p>Bạn chưa có tài khoản? <a href="#">Đăng ký Spotify</a></p>
         </div>
-        <div class="message"><?php echo $message; ?></div>
     </div>
 </body>
 </html>
