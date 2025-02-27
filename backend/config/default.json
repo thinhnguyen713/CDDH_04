@@ -1,0 +1,7 @@
+{
+  "vnp_TmnCode":"HTAS3939",
+  "vnp_HashSecret":"O267MGDRXFL57F40ML7WO9EMO39SDU2A",
+  "vnp_Url":"https://sandbox.vnpayment.vn/paymentv2/vpcpay.html",
+  "vnp_Api":"https://sandbox.vnpayment.vn/merchant_webapi/api/transaction",
+  "vnp_ReturnUrl": "http://localhost:5433/vnpay/vnpay_return"
+}
