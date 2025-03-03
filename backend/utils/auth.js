@@ -1,9 +1,9 @@
-const jwt = require("jsonwebtoken");
-const { jwtConfig } = require("../config");
-const { User } = require("../db/models");
-const { secret, expiresIn } = jwtConfig;
+const jwt = require("jsonwebtoken"); 
+const { jwtConfig } = require("../config"); 
+const { User } = require("../db/models"); 
+const { secret, expiresIn } = jwtConfig; 
 
-// Kiểm tra và xử lý expiresIn để loại bỏ ký tự không hợp lệ (như 's') và đảm bảo là số
+// Kiểm tra để loại bỏ ký tự không hợp lệ 
 const expiresInSeconds = parseInt(expiresIn.replace(/[^\d]/g, ""), 10);
 
 // Kiểm tra xem expiresIn có phải là số hợp lệ hay không
@@ -11,58 +11,58 @@ if (isNaN(expiresInSeconds)) {
   throw new Error("JWT_EXPIRES_IN must be a valid number.");
 }
 
-// Send a JWT cookie
 const setTokenCookie = (res, user) => {
-  // Tạo token JWT
+
   const token = jwt.sign(
-    { data: user.toSafeObject() },
-    secret,
-    { expiresIn: expiresInSeconds } // expiresIn sử dụng giá trị đã xử lý
+    { data: user.toSafeObject() }, 
+    secret, 
+    { expiresIn: expiresInSeconds } 
   );
 
-  const isProduction = process.env.NODE_ENV === "production";
+  const isProduction = process.env.NODE_ENV === "production"; 
 
-  // Thiết lập cookie token
   res.cookie("token", token, {
-    maxAge: expiresInSeconds * 1000, // maxAge được tính bằng milliseconds
-    httpOnly: true,
-    secure: isProduction,
-    sameSite: isProduction && "Lax",
+    maxAge: expiresInSeconds * 1000,
+    httpOnly: true, 
+    secure: isProduction, 
+    sameSite: isProduction && "Lax", 
   });
 
-  return token;
+  return token; 
 };
 
+// Middleware khôi phục thông tin người dùng từ token
 const restoreUser = (req, res, next) => {
-  // Lấy token từ cookies
+  
   const { token } = req.cookies;
 
-  // Kiểm tra và xác thực token
+  // Kiểm tra và xác thực token JWT
   return jwt.verify(token, secret, null, async (err, jwtPayload) => {
     if (err) {
-      return next();
+      return next(); 
     }
 
     try {
       const { id } = jwtPayload.data;
-      req.user = await User.scope("currentUser").findByPk(id);
+      req.user = await User.scope("currentUser").findByPk(id); 
     } catch (e) {
-      res.clearCookie("token");
+      res.clearCookie("token"); // Nếu có lỗi khi tìm user, xóa token cookie
       return next();
     }
 
-    if (!req.user) res.clearCookie("token");
+    if (!req.user) res.clearCookie("token"); // Nếu user không tồn tại, xóa token cookie
 
-    return next();
+    return next(); 
   });
 };
 
-// Middleware yêu cầu xác thực người dùng
+// Middleware yêu cầu xác thực người dùng trước khi truy cập tài nguyên
 const requireAuth = [
-  restoreUser,
+  restoreUser, 
   function (req, res, next) {
-    if (req.user) return next();
+    if (req.user) return next(); 
 
+    
     const err = new Error("Unauthorized");
     err.title = "Unauthorized";
     err.errors = ["Unauthorized"];

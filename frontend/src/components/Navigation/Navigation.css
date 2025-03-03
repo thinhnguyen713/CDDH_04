@@ -1,0 +1,106 @@
+/* GENERAL NAVIGATION STYLES */
+   .navbar {
+    display: flex;
+    justify-content: center; 
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%); 
+    width: 100%;
+    background-color: #333;
+    height: 50px;
+    z-index: 1000;
+  }
+  #nav-content {
+    width: 960px; 
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+  }
+  
+  /* NAVIGATION MENU */
+  #nav {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  /* Căn giữa các mục menu */
+  #nav a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    min-width: 90px;
+    height: 50px;
+    padding: 0 10px;
+    text-align: center;
+    transition: background 0.3s ease-in-out;
+  }
+  
+  /* Upgrade */
+  #nav-upgrade {
+    font-weight: bold;
+    color: gold;
+    min-width: 100px;
+  }
+  
+  /* LOGO */
+  #logo {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1fb453;
+    padding: 0 10px;
+  }
+  
+  #imgLogo {
+    width: 80px;
+  }
+  
+  /* SEARCH BAR */
+  .nav-search-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .nav-search {
+    height: 26px;
+    width: 300px;
+    font-size: 14px;
+    padding-left: 8px;
+  }
+  
+  .nav-search-btn {
+    position: absolute;
+    right: 10px;
+    font-size: 12px;
+  }
+  
+  /* PROFILE & LOGIN BUTTONS */
+  #nav-profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 90px;
+  }
+  
+  .navBtnContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 10px;
+  }
+  
+  /* PROFILE DROPDOWN MENU */
+  .profile-dropdown {
+    width: 130px;
+    padding: 8px;
+  }
+  
